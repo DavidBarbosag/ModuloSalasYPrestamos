@@ -1,0 +1,18 @@
+[project]
+name = "modulosalasyprestamos"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "David Alfonso Barbosa Gomez",email = "david.barbosa-g@mail.escuelaing.edu.co"},
+    {name = "Juan Jose Diaz Gomez",email = "juan.dgomez@mail.escuelaing.edu.co"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "django (>=5.2,<6.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
