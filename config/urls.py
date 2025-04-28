@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from Room.views import CreateRoomView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('crear-sala/', CreateRoomView.as_view(), name='crear-sala'),
 ]

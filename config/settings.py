@@ -26,11 +26,19 @@ SECRET_KEY = 'django-insecure-ut$p&49361=8^38eh6%@ser3r_(8z^r362jre61*+^82^)_#w2
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL = 'User.User'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+
+    'Room',
+    'RecreativeElement',
+    'Reservation',
+    'Register',
+    'User',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +46,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -72,13 +86,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE':   'django.db.backends.postgresql_psycopg2',
+        'NAME':     'postgres',
+        'USER':     'postgres.jutkrzvrtozbqpzijyhv',
+        'PASSWORD': 'ECI_BIENESTAR',
+        'HOST':     'aws-0-us-east-2.pooler.supabase.com',
+        'PORT':     '6543',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
