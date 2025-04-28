@@ -7,9 +7,10 @@ authors = [
     {name = "Juan Jose Diaz Gomez",email = "juan.dgomez@mail.escuelaing.edu.co"}
 ]
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<4.0"
 dependencies = [
-    "django (>=5.2,<6.0)"
+    "django (>=5.2,<6.0)",
+    "psycopg2 (>=2.9.10,<3.0.0)",
 ]
 
 
