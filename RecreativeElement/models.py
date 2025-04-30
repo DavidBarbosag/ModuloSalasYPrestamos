@@ -13,8 +13,8 @@ class RecreativeElement(models.Model):
         quantity (int): Total available quantity of this item
     """
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=15, blank=False)
-    quantity = models.IntegerField(blank=False)
+    name = models.CharField(max_length=100, blank=False, null = False, db_column='name')
+    quantity = models.IntegerField(blank=False, null = False, db_column='quantity')
 
 
     class Meta:

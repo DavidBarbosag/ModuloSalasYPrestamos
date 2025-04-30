@@ -32,12 +32,11 @@ AUTH_USER_MODEL = 'User.User'
 
 INSTALLED_APPS = [
     'rest_framework',
-
-    'Room',
     'RecreativeElement',
-    'Reservation',
     'Register',
     'User',
+    'Room',
+    'Reservation',
 
     'django.contrib.admin',
     'django.contrib.auth',

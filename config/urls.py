@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Room.views import CreateRoomView
+from RecreativeElement.views import RecreativeElementView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('crear-sala/', CreateRoomView.as_view(), name='crear-sala'),
+    path('crear-sala/', CreateRoomView.as_view(), name='rooms'),
+
+    path('recreative-elements/', RecreativeElementView.as_view(), name='element'),
 ]
