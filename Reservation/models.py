@@ -29,7 +29,7 @@ class Reservation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservations', blank=False)
 
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='room', blank=True)
-    register = models.ForeignKey(Register, on_delete=models.CASCADE, related_name='reservations', blank=True)
+    register = models.ForeignKey(Register, related_name='reservations', blank=True)
     borrowed_elements = models.ManyToManyField(RecreativeElement, through='ReservationXElements', related_name='reservations', blank=True)
 
     def __str__(self):

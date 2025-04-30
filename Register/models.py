@@ -30,7 +30,7 @@ class Register(models.Model):
         verbose_name_plural = 'Registers'
         ordering = ['reservationId']
         indexes = [
-            models.Index(fields=['reservation']),
+            models.Index(fields=['reservationId']),
         ]
 
     def __str__(self):
