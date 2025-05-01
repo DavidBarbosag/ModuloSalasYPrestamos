@@ -7,9 +7,7 @@ class RecreativeElementSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'quantity']
 
     def to_representation(self, instance):
-        """Transforma los nombres de campos al enviar la respuesta"""
         data = super().to_representation(instance)
-        # Si Supabase usa nombres diferentes en la respuesta:
         return {
             'id': data['id'],
             'item_name': data['name'],
@@ -17,8 +15,6 @@ class RecreativeElementSerializer(serializers.ModelSerializer):
         }
 
     def to_internal_value(self, data):
-        """Transforma los nombres de campos al recibir datos"""
-        # Si Supabase envía datos con nombres diferentes
         if 'item_name' in data:
             data['name'] = data.pop('item_name')
         if 'item_quantity' in data:

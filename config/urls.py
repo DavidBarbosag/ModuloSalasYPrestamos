@@ -18,10 +18,17 @@ from django.contrib import admin
 from django.urls import path
 from Room.views import CreateRoomView
 from RecreativeElement.views import RecreativeElementView
+from Register.views import RegisterView
+from User.views import UserView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('crear-sala/', CreateRoomView.as_view(), name='rooms'),
-
     path('recreative-elements/', RecreativeElementView.as_view(), name='element'),
+    path('recreative-elements/<identifier>/', RecreativeElementView.as_view(), name='element-detail'),
+    path('register/', RegisterView.as_view(), name='registers'),
+    path('register/<int:identifier>/', RegisterView.as_view(), name='register-detail'),
+    path('user/', UserView.as_view(), name='users'),
+    path('user/<identifier>/', UserView.as_view(), name='user-detail'),
 ]
+
