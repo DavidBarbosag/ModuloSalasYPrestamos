@@ -17,9 +17,9 @@ class Room(models.Model):
     """
 
     id = models.CharField(primary_key=True, max_length=15, blank=False)
-    location = models.CharField(max_length=15, blank=False)
+    location = models.CharField(max_length=150, blank=False)
     capacity = models.IntegerField(blank=False)
-    state = models.CharField(max_length=15, blank=False)
+    state = models.CharField(max_length=150, blank=False)
     description = models.TextField(blank=True)
 
     recreative_elements = models.ManyToManyField(RecreativeElement, through='RoomXElements', related_name='rooms')

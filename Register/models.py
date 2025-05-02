@@ -1,5 +1,5 @@
 from django.db import models
-from Reservation.models import Reservation
+
 
 class Register(models.Model):
     """
@@ -21,7 +21,7 @@ class Register(models.Model):
         NOT_RETURNED = 'NOT_RETURNED', 'Not Returned'
 
     registerId = models.AutoField(primary_key=True)
-    reservationId = models.ForeignKey(Reservation, on_delete=models.PROTECT, related_name='registers')
+    reservationId = models.ForeignKey("Reservation.Reservation", on_delete=models.PROTECT, related_name='registers', blank=False, null = False)
     returnedElements = models.JSONField(blank=False, default=dict)
     remainingElements = models.JSONField(blank=True, default=dict)
 

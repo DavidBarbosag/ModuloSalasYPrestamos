@@ -1,7 +1,6 @@
 from django.db import models
 from RecreativeElement.models import RecreativeElement
 from Room.models import Room
-from Register.models import Register
 from django.contrib.auth import get_user_model
 User = get_user_model() 
 from django.conf import settings
@@ -23,13 +22,13 @@ class Reservation(models.Model):
 
     id = models.CharField(primary_key=True, max_length=15, blank=False)
     start_time = models.DateTimeField(blank=False)
-    location = models.CharField(max_length=15, blank=False)
-    state = models.CharField(max_length=15, blank=False)
+    location = models.CharField(max_length=150, blank=False)
+    state = models.CharField(max_length=150, blank=False)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservations', blank=False)
 
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='room', blank=True)
-    register = models.ForeignKey(Register, related_name='reservations', blank=True)
+    register = models.ForeignKey("Register.Register", on_delete=models.PROTECT, related_name='reservations', blank=True)
     borrowed_elements = models.ManyToManyField(RecreativeElement, through='ReservationXElements', related_name='reservations', blank=True)
 
     def __str__(self):
