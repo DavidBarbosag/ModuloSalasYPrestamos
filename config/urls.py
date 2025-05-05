@@ -32,7 +32,6 @@ router.register(r'reservation-elements', ReservationElementViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('crear-sala/', CreateRoomView.as_view(), name='rooms'),
     path('recreative-elements/', RecreativeElementView.as_view(), name='element'),
     path('recreative-elements/<identifier>/', RecreativeElementView.as_view(), name='element-detail'),
     path('register/', RegisterView.as_view(), name='registers'),
