@@ -18,10 +18,17 @@ from django.contrib import admin
 from django.urls import path
 from Room.views import Room, RoomXElements
 from RecreativeElement.views import RecreativeElementView
+from Reservation.views import ReservationViewSet, ReservationElementViewSet  
+from Room.views import RoomViewSet, RoomXElementsViewSet
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'room', RoomViewSet)
+router.register(r'room-elements', RoomXElementsViewSet)
+router.register(r'reservation', ReservationViewSet)
+router.register(r'reservation-elements', ReservationElementViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('room/', Room.as_view(), name='rooms'),
-    path('roomxelements/', RoomXElements.as_view(), name='roomxelements'),
     path('recreative-elements/', RecreativeElementView.as_view(), name='element'),
 ]
