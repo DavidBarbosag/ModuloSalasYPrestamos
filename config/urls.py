@@ -16,11 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Room.views import Room, RoomXElements
 from RecreativeElement.views import RecreativeElementView
 from Reservation.views import ReservationViewSet, ReservationElementViewSet  
 from Room.views import RoomViewSet, RoomXElementsViewSet
 from rest_framework.routers import DefaultRouter
+
+from Register.views import RegisterView
+from User.views import UserView
 
 router = DefaultRouter()
 router.register(r'room', RoomViewSet)
@@ -30,5 +32,12 @@ router.register(r'reservation-elements', ReservationElementViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('crear-sala/', CreateRoomView.as_view(), name='rooms'),
     path('recreative-elements/', RecreativeElementView.as_view(), name='element'),
+    path('recreative-elements/<identifier>/', RecreativeElementView.as_view(), name='element-detail'),
+    path('register/', RegisterView.as_view(), name='registers'),
+    path('register/<int:identifier>/', RegisterView.as_view(), name='register-detail'),
+    path('user/', UserView.as_view(), name='users'),
+    path('user/<identifier>/', UserView.as_view(), name='user-detail'),
 ]
+
