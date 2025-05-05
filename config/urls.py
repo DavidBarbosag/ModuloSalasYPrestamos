@@ -16,10 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Room.views import CreateRoomView
 from RecreativeElement.views import RecreativeElementView
+from Reservation.views import ReservationViewSet, ReservationElementViewSet  
+from Room.views import RoomViewSet, RoomXElementsViewSet
+from rest_framework.routers import DefaultRouter
+
 from Register.views import RegisterView
 from User.views import UserView
+
+router = DefaultRouter()
+router.register(r'room', RoomViewSet)
+router.register(r'room-elements', RoomXElementsViewSet)
+router.register(r'reservation', ReservationViewSet)
+router.register(r'reservation-elements', ReservationElementViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

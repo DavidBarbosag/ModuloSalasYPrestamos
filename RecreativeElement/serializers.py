@@ -15,6 +15,7 @@ class RecreativeElementSerializer(serializers.ModelSerializer):
         }
 
     def to_internal_value(self, data):
+        """Transforma los nombres de campos al recibir datos"""
         if 'item_name' in data:
             data['name'] = data.pop('item_name')
         if 'item_quantity' in data:
