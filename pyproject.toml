@@ -3,17 +3,52 @@ name = "modulosalasyprestamos"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "David Alfonso Barbosa Gomez",email = "david.barbosa-g@mail.escuelaing.edu.co"},
-    {name = "Juan Jose Diaz Gomez",email = "juan.dgomez@mail.escuelaing.edu.co"}
+    {name = "David Alfonso Barbosa Gomez", email = "david.barbosa-g@mail.escuelaing.edu.co"},
+    {name = "Juan Jose Diaz Gomez", email = "juan.dgomez@mail.escuelaing.edu.co"}
 ]
 readme = "README.md"
 requires-python = ">=3.11,<4.0"
 dependencies = [
-    "django (>=5.2,<6.0)",
-    "psycopg2 (>=2.9.10,<3.0.0)",
+    "django>=5.2,<6.0",
+    "psycopg2>=2.9.10,<3.0.0",
+    "djangorestframework>=3.14.0,<4.0.0"
 ]
 
+# Configuración específica para Poetry
+[tool.poetry]
+packages = [
+    {include = "config", from = "."},
+    {include = "Exceptions", from = "."},
+    {include = "RecreativeElement", from = "."},
+    {include = "Register", from = "."},
+    {include = "Reservation", from = "."},
+    {include = "Room", from = "."},
+    {include = "User", from = "."}
+]
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.0"
+pytest-django = "^4.5.2"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest-cov = "^6.1.1"
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core>=2.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+# Configuración de pytest
+[tool.pytest.ini_options]
+addopts = "--cov=. --cov-report=html"
+python_files = "test_*.py"
+testpaths = [
+    "config",
+    "Exceptions",
+    "RecreativeElement",
+    "Register",
+    "Reservation",
+    "Room",
+    "User"
+]
+DJANGO_SETTINGS_MODULE = "config.settings"
