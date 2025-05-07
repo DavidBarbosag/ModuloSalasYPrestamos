@@ -43,6 +43,9 @@ class RoomWriteSerializer(serializers.ModelSerializer):
 
         instance.location = validated_data.get('location', instance.location)
         instance.capacity = validated_data.get('capacity', instance.capacity)
+        instance.state = validated_data.get('state', instance.state)
+        instance.description = validated_data.get('description', instance.description)
+        instance.availability = validated_data.get('availability', instance.availability)
         instance.save()
 
         if elementos_data is not None:

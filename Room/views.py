@@ -19,16 +19,15 @@ class RoomViewSet(viewsets.ModelViewSet):
             return RoomWriteSerializer
         return RoomReadSerializer
 
-    @action(detail=False, methods=['get'], url_path='disponibilidad')
-    def disponibilidad_general(self, request):
-        data = []
-        for room in self.queryset:
-            data.append({
-                'room_id': room.id,
-                'location': room.location,
-                'availability': room.availability,
-            })
-        return Response(data)
+    @action(detail=True, methods=['get'], url_path='disponibilidad')
+    def disponibilidad(self, request, pk=None):
+        room = self.get_object()
+        return Response({'availability': room.availability})
+    
+    @action(detail=True, methods=['get'], url_path='elementos')
+    def elementos(self, request, pk=None):
+        room = self.get_object()
+        return Response({'elementos': room.recreative_elements.all()})
 
 class RoomXElementsViewSet(viewsets.ModelViewSet):
     queryset = RoomXElements.objects.all()
