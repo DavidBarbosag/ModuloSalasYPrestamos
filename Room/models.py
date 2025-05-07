@@ -18,7 +18,7 @@ class Room(models.Model):
         availability (list): Disponibilidad de la sala en horarios y días.
         recreative_elements (ManyToMany[RecreativeElement]): Elementos recreativos asociados.
     """
-    id = models.CharField(primary_key=True, max_length=15, blank=False)
+    id = models.AutoField(primary_key=True, blank=False)
     location = models.CharField(max_length=150, blank=False)
     capacity = models.IntegerField(blank=False)
     state = models.CharField(max_length=150, blank=False)

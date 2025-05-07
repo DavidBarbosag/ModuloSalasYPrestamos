@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Reservation, ReservationXElements
 from RecreativeElement.serializers import RecreativeElementSerializer
-from Room.serializer import RoomSerializer
+from Room.serializer import RoomReadSerializer
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -21,7 +21,7 @@ class ReservationXElementsSerializer(serializers.ModelSerializer):
 
 class ReservationSerializer(serializers.ModelSerializer):
     user_details = UserSerializer(source='user', read_only=True)
-    room_details = RoomSerializer(source='room', read_only=True)
+    room_details = RoomReadSerializer(source='room', read_only=True)
     borrowed_elements = ReservationXElementsSerializer(source='reservationxelements_set', many=True, read_only=True)
     
     class Meta:
