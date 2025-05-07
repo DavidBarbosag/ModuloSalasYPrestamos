@@ -20,7 +20,7 @@ class Reservation(models.Model):
         borrowed_elements (ManyToMany[RecreativeElement]): Recreational elements associated with the reservation.
     """
 
-    id = models.CharField(primary_key=True, max_length=15, blank=False)
+    id = models.AutoField(primary_key=True, max_length=15, blank=False)
     start_time = models.DateTimeField(blank=False)
     location = models.CharField(max_length=150, blank=False)
     state = models.CharField(max_length=150, blank=False)
