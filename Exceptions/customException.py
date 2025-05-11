@@ -10,6 +10,8 @@ class exception:
     # Error messages
     INVALID_ROOMAVAILABILITY = "Invalid room availability format. Must be a list of 8 lists, each containing 6 elements."
     ROOMALREADY_RESERVED = "La sala ya está reservada en este horario."
+    INVALID_DAYHOUR = "El día u horario no son válidos."
+    INVALID_ROOM = "La sala no existe."
     @staticmethod
     def argumento_invalido():
         raise customException(customException.INVALID_ROOMAVAILABILITY)

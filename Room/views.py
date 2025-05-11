@@ -19,6 +19,10 @@ class RoomViewSet(viewsets.ModelViewSet):
             return RoomWriteSerializer
         return RoomReadSerializer
 
+    def update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return super().update(request, *args, **kwargs)
+
     @action(detail=True, methods=['get'], url_path='disponibilidad')
     def disponibilidad(self, request, pk=None):
         room = self.get_object()
@@ -28,6 +32,34 @@ class RoomViewSet(viewsets.ModelViewSet):
     def elementos(self, request, pk=None):
         room = self.get_object()
         return Response({'elementos': room.recreative_elements.all()})
+    
+    @action(detail=True, methods=['post'], url_path='add_element')
+    def add_element(self, request, pk=None):
+        room = self.get_object()
+        
+        element_id = request.data.get('element_id')
+        amount = request.data.get('amount', 1) 
+        
+        if not element_id:
+            return Response(
+                {'error': 'Se requiere el ID del elemento (element_id)'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        try:
+            RoomXElements.objects.create(
+                room=room,
+                element_id=element_id,
+                amount=amount
+            )
+            return Response(
+                {'message': 'Elemento agregado correctamente a la sala'},
+                status=status.HTTP_201_CREATED
+            )
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 class RoomXElementsViewSet(viewsets.ModelViewSet):
     queryset = RoomXElements.objects.all()

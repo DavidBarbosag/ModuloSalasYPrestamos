@@ -18,21 +18,31 @@ class Reservation(models.Model):
         user (User): User who made the reservation (foreign key to User model).
         register (Register): Register associated with the reservation (foreign key to Register model).
         borrowed_elements (ManyToMany[RecreativeElement]): Recreational elements associated with the reservation.
+        reserved_day (str): Day of the week for the reservation (e.g., "Lunes").
+        reserved_hour_block (str): Hour block for the reservation (e.g., "7:00-8:30").
     """
 
     id = models.AutoField(primary_key=True, blank=False)
-    start_time = models.DateTimeField(blank=False)
+
+    reserved_day = models.CharField(max_length=20, blank=True, null=True)
+    reserved_hour_block = models.CharField(max_length=20, blank=True, null=True)
+
     location = models.CharField(max_length=150, blank=False)
     state = models.CharField(max_length=150, blank=False)
-
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservations', blank=False)
-
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='room', blank=True)
-    register = models.ForeignKey("Register.Register", on_delete=models.PROTECT, related_name='reservations', blank=True)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='room', blank=True, null=True)
+    register = models.ForeignKey("Register.Register", on_delete=models.PROTECT, related_name='reservations', blank=True, null=True)
     borrowed_elements = models.ManyToManyField(RecreativeElement, through='ReservationXElements', related_name='reservations', blank=True)
 
     def __str__(self):
             return f"{self.id} - {self.user.id}"
+
+    def save(self, *args, **kwargs):
+        """
+        Override save method to initialize reserved_day and reserved_hour_block
+        if they are not set yet.
+        """
+        super().save(*args, **kwargs)
 
 class ReservationXElements(models.Model):
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
@@ -41,5 +51,3 @@ class ReservationXElements(models.Model):
 
     class Meta:
         unique_together = ('reservation', 'element')
-
-    
