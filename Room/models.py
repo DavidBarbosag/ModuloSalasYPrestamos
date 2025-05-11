@@ -7,18 +7,18 @@ def defaultAvailability():
 
 class Room(models.Model):
     """
-    Representa una sala con elementos recreativos.
+    Represents a room with recreative elements.
 
-    Atributos:
-        id (str): Identificador único de la sala (clave primaria).
-        location (str): Ubicación de la sala.
-        capacity (int): Capacidad máxima de la sala.
-        description (str): Descripción opcional de la sala.
-        availability (list): Disponibilidad de la sala en horarios y días.
-        recreative_elements (ManyToMany[RecreativeElement]): Elementos recreativos asociados.
+    Attributes:
+        id (str): Unique identifier of the room (primary key).
+        location (str): Room location.
+        capacity (int): Maximum capacity of the room.
+        description (str): Optional description of the room.
+        availability (list): Room availability by schedules and days.
+        recreative_elements (ManyToMany[RecreativeElement]): Associated recreational elements.
     """
 
-    id = models.AutoField(primary_key=True, blank=False)
+    id = models.AutoField(primary_key=True)
     location = models.CharField(max_length=150, blank=False)
     capacity = models.IntegerField(blank=False)
     description = models.TextField(blank=True)
@@ -54,7 +54,7 @@ class Room(models.Model):
         """
         super().clean()
         if not isinstance(self.availability, list) or len(self.availability) != 8 or len(self.availability[0]) != 6:
-            raise customException(exception.INVALID_ROOMAVAILABILITY)
+            exception.raise_invalid_room_availability()
 
     def reserveRoom(self, day, hour):
         """
@@ -134,8 +134,47 @@ class Room(models.Model):
             
         return self.availability[hour_index][day_index] == 0
 
+    def getRoomAvailability(self, roomId):
+        """
+        Get the availability of a room.
+
+        Args:
+            roomId (int): Room ID.
+
+        Returns:
+            list: Availability of the room.
+        """
+        try:
+            room = Room.objects.get(id=roomId)
+            return room.availability
+        except Room.DoesNotExist:
+            exception.raise_room_not_found()
+
+    def getRecrereativeElements(self, roomId):
+        """
+        Get the recreative elements of a room.
+
+        Args:
+            roomId (int): Room ID.
+
+        Returns:
+            list: List of recreative elements as JSON.
+        """
+        try:
+            room = Room.objects.get(id=roomId)
+            recreativeElements = room.recreative_elements.all()
+            elements_json = [
+                {"name": element.name, "quantity": element.quantity}
+                for element in recreativeElements
+            ]
+            return elements_json
+        except Room.DoesNotExist:
+            exception.raise_room_not_found()
+
+
     def __str__(self):
-        return f"{self.id} en {self.location}"
+        return f"{self.id} - {self.location}"
+
 
 
 class RoomXElements(models.Model):

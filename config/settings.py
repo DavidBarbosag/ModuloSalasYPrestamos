@@ -96,6 +96,7 @@ DATABASES = {
         'PASSWORD': 'ECI_BIENESTAR',
         'HOST':     'aws-0-us-east-2.pooler.supabase.com',
         'PORT':     '6543',
+
     }
 }
 

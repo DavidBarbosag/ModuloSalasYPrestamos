@@ -12,6 +12,21 @@ class exception:
     ROOMALREADY_RESERVED = "La sala ya está reservada en este horario."
     INVALID_DAYHOUR = "El día u horario no son válidos."
     INVALID_ROOM = "La sala no existe."
+    ROOM_NOT_FOUND = "Room not found."
+    INVALID_ARGS = "Invalid arguments provided."
+
     @staticmethod
-    def argumento_invalido():
-        raise customException(customException.INVALID_ROOMAVAILABILITY)
+    def raise_invalid_room_availability():
+        raise customException(exception.INVALID_ROOMAVAILABILITY)
+
+    @staticmethod
+    def raise_room_already_reserved():
+        raise customException(exception.ROOMALREADY_RESERVED)
+
+    @staticmethod
+    def raise_room_not_found():
+        raise customException(exception.ROOM_NOT_FOUND)
+
+    @staticmethod
+    def raise_invalid_args():
+        raise customException(exception.INVALID_ARGS)
