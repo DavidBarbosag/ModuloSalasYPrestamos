@@ -27,13 +27,15 @@ class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservation
         fields = [
-            'id', 'start_time', 'location', 'state', 
+            'id', 'location', 'state',
+            'reserved_day', 'reserved_hour_block',
             'user', 'user_details',
             'room', 'room_details',
             'register', 
             'borrowed_elements'
         ]
         read_only_fields = ['user_details', 'room_details', 'borrowed_elements']
+
 
 
 class ReservationCreateSerializer(serializers.ModelSerializer):
@@ -48,7 +50,8 @@ class ReservationCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservation
         fields = [
-            'id', 'start_time', 'location', 'state', 
+            'id', 'location', 'state',
+            'reserved_day', 'reserved_hour_block',
             'user', 'room', 'register', 'borrowed_elements'
         ]
     

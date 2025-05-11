@@ -13,7 +13,6 @@ class Room(models.Model):
         id (str): Unique identifier of the room (primary key).
         location (str): Room location.
         capacity (int): Maximum capacity of the room.
-        state (str): Current state of the room.
         description (str): Optional description of the room.
         availability (list): Room availability by schedules and days.
         recreative_elements (ManyToMany[RecreativeElement]): Associated recreational elements.
@@ -22,7 +21,6 @@ class Room(models.Model):
     id = models.AutoField(primary_key=True)
     location = models.CharField(max_length=150, blank=False)
     capacity = models.IntegerField(blank=False)
-    state = models.CharField(max_length=150, blank=False)
     description = models.TextField(blank=True)
     availability = models.JSONField(default=defaultAvailability, blank=False, null=False)
     recreative_elements = models.ManyToManyField(RecreativeElement, through='RoomXElements', related_name='rooms')
@@ -60,22 +58,81 @@ class Room(models.Model):
 
     def reserveRoom(self, day, hour):
         """
-        Reserve a room in a specified time.
+        Reserva la sala en un horario específico.
 
         Args:
-            day (str): week day.
-            hour (str): hour.
+            day (str): Día de la semana (ej. "Lunes")
+            hour (str): Bloque horario (ej. "10:00-11:30")
+
+        Returns:
+            bool: True si se reservó correctamente
 
         Raises:
-            ValidationError: Si la sala ya está reservada en ese horario.
+            customException: Si la sala ya está reservada en ese horario
         """
-        if day not in self.DAYS or hour not in self.HOURS:
-            exception.raise_invalid_args()
-
-        if self.availability[self.DAYS[day]][self.HOURS[hour]] == 1:
-            exception.raise_room_already_reserved()
-        self.availability[self.DAYS[day]][self.HOURS[hour]] = 1
+        day_index = self.DAYS.get(day)
+        hour_index = self.HOURS.get(hour)
+        
+        if day_index is None or hour_index is None:
+            raise customException(exception.INVALID_DAYHOUR)
+            
+        if self.availability[hour_index][day_index] == 1:
+            return False
+            
+        self.availability[hour_index][day_index] = 1
         self.save(update_fields=['availability'])
+        
+        return True
+
+    def releaseRoom(self, day, hour):
+        """
+        Libera una sala previamente reservada en un horario específico.
+
+        Args:
+            day (str): Día de la semana (ej. "Lunes")
+            hour (str): Bloque horario (ej. "10:00-11:30")
+
+        Returns:
+            bool: True si se liberó correctamente
+
+        Raises:
+            customException: Si el día u horario no son válidos
+        """
+        day_index = self.DAYS.get(day)
+        hour_index = self.HOURS.get(hour)
+        
+        if day_index is None or hour_index is None:
+            raise customException(exception.INVALID_DAYHOUR)
+            
+        if self.availability[hour_index][day_index] == 0:
+            return False
+            
+        self.availability[hour_index][day_index] = 0
+        self.save(update_fields=['availability'])
+        return True
+        
+    def checkIfRoomIsFullyBooked(self):
+        """
+        Verifica si la sala está completamente reservada para actualizar su estado.
+        
+        Returns:
+            bool: True si la sala está completamente reservada, False en caso contrario.
+        """
+        for hour_row in self.availability:
+            for day_cell in hour_row:
+                if day_cell == 0:
+                    return False
+        return True
+    
+    def is_available(self, day, hour):
+        """Verifica si la sala está disponible en un horario específico"""
+        day_index = self.DAYS.get(day)
+        hour_index = self.HOURS.get(hour)
+        
+        if day_index is None or hour_index is None:
+            raise customException(exception.INVALID_DAYHOUR)
+            
+        return self.availability[hour_index][day_index] == 0
 
     def getRoomAvailability(self, roomId):
         """
