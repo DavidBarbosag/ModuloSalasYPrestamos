@@ -31,7 +31,19 @@ class RoomViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'], url_path='elementos')
     def elementos(self, request, pk=None):
         room = self.get_object()
-        return Response({'elementos': room.recreative_elements.all()})
+        room_elements = room.roomxelements_set.select_related('element').all()
+        
+        elementos_data = [{
+            'element_id': item.element.id,
+            'amount': item.amount,
+            'element_details': {
+                'id': item.element.id,
+                'item_name': item.element.name,
+                'item_quantity': item.element.quantity
+            }
+        } for item in room_elements]
+        
+        return Response({'elementos': elementos_data})
     
     @action(detail=True, methods=['post'], url_path='add_element')
     def add_element(self, request, pk=None):
