@@ -144,4 +144,10 @@ class ReservationXElements(models.Model):
     amount = models.PositiveIntegerField()
 
     class Meta:
-        unique_together = ('reservation', 'element')
+        verbose_name = 'ReservationXElements'
+        verbose_name_plural = 'ReservationsXElements'
+        ordering = ['reservation']
+        indexes = [
+            models.Index(fields=['reservation']),
+            models.Index(fields=['element']),
+        ]
