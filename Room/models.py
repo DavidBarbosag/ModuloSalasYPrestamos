@@ -39,7 +39,7 @@ class Room(models.Model):
     DAYS = {
         "Lunes": 0,
         "Martes": 1,
-        "Miércoles": 2,
+        "Miercoles": 2,
         "Jueves": 3,
         "Viernes": 4,
         "Sabado": 5
