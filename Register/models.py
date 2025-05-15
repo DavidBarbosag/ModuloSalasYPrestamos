@@ -24,6 +24,7 @@ class Register(models.Model):
     reservationId = models.ForeignKey("Reservation.Reservation", on_delete=models.PROTECT, related_name='registers', blank=False, null = False)
     returnedElements = models.JSONField(blank=False, default=dict)
     remainingElements = models.JSONField(blank=True, default=dict)
+    admin_comment = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Register'
