@@ -9,6 +9,7 @@ from django.utils import timezone
 from Exceptions.customException import exception, customException
 from django.db import transaction
 import calendar
+from django.db.models import Q
 
 class ReservationViewSet(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
@@ -196,6 +197,21 @@ class ReservationViewSet(viewsets.ModelViewSet):
         
         # Eliminar la reserva
         return super().destroy(request, *args, **kwargs)
+
+    @action(detail=False, methods=['get'])
+    def search(self, request):
+        search_param = request.query_params.get('q', '').strip()
+
+        if not search_param:
+            return Response({'error': 'Parámetro de búsqueda vacío'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if search_param.isdigit():
+            reservations = self.queryset.filter(id=int(search_param))
+        else:
+            reservations = self.queryset.none()
+
+        serializer = self.get_serializer(reservations, many=True)
+        return Response(serializer.data)
     
 class ReservationElementViewSet(viewsets.ModelViewSet):
     queryset = ReservationXElements.objects.all()

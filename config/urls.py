@@ -39,5 +39,7 @@ urlpatterns = [
     path('register/<int:identifier>/', RegisterView.as_view(), name='register-detail'),
     path('user/', UserView.as_view(), name='users'),
     path('user/<identifier>/', UserView.as_view(), name='user-detail'),
+    path('recreative-elements/', RecreativeElementView.as_view()),
+    path('recreative-elements/<str:identifier>/', RecreativeElementView.as_view()),
 ] + router.urls 
 

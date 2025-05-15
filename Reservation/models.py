@@ -26,7 +26,6 @@ class Reservation(models.Model):
 
     reserved_day = models.CharField(max_length=20, blank=True, null=True)
     reserved_hour_block = models.CharField(max_length=20, blank=True, null=True)
-
     location = models.CharField(max_length=150, blank=False)
     state = models.CharField(max_length=150, blank=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservations', blank=False)
