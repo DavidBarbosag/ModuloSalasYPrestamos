@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 from .models import Reservation, ReservationXElements
 from Room.models import RoomXElements

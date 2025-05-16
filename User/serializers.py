@@ -20,8 +20,8 @@ class UserSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         return {
-            'user_id': data['id'],
-            'identification_number': data['idNum'],
+            'id': data['id'],
+            'idNum': data['idNum'],
             'full_name': data['name'],
             'email_address': data['email'],
             'role': data['role'],

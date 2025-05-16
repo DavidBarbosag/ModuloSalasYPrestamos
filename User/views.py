@@ -21,7 +21,8 @@ class UserView(APIView):
         """
         try:
             user = User.objects.filter(id=identifier).first() or \
-                   User.objects.filter(name=identifier).first()
+                   User.objects.filter(name=identifier).first() or \
+                     User.objects.filter(idNum=identifier).first()
             if not user:
                 return Response({"error": "Usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 

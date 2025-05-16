@@ -53,6 +53,20 @@ class RoomWriteSerializer(serializers.ModelSerializer):
             'capacity': {'required': False}
         }
 
+    def create(self, validated_data):
+        elementos_data = validated_data.pop('elementos', [])
+
+        room = Room.objects.create(**validated_data)
+
+        for elemento in elementos_data:
+            RoomXElements.objects.create(
+                room=room,
+                element=elemento['element'],
+                amount=elemento['amount']
+            )
+
+        return room
+
     def update(self, instance, validated_data):
         elementos_data = validated_data.pop('elementos', None)
         
