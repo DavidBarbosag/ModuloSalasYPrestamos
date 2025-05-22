@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-ut$p&49361=8^38eh6%@ser3r_(8z^r362jre61*+^82^)_#w2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'desplieguebackproyecto-caewexbzb2hbhje2.eastus-01.azurewebsites.net',
+]
 AUTH_USER_MODEL = 'User.User'
 
 # Application definition
