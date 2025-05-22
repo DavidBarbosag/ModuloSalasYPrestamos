@@ -176,3 +176,5 @@ cython_debug/
 # IDEs and editors
 .idea/
 .vscode/
+
+.yml
